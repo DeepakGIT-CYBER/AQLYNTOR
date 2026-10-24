@@ -99,7 +99,7 @@ function Dashboard() {
           ))}
         </div>
         <div className="mt-5 rounded-lg border bg-background/40 p-4 font-mono text-sm">
-          <span className="text-primary">[{steps[active].name}]</span> <span className="text-muted-foreground">{steps[active].desc}</span>
+          <span className="text-primary">[{steps[active]!.name}]</span> <span className="text-muted-foreground">{steps[active]!.desc}</span>
         </div>
       </section>
 
