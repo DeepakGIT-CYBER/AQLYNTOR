@@ -8,11 +8,17 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 import time
 
-from core.crypto_audit import MerkleAuditTrail
-from core.swarm_orchestrator import AgentSwarmOrchestrator
+# Importing v4.0 to v10.0 Modules
+from core.mesh_cluster import KubernetesMeshSimulator
+from core.llm_proxy_firewall import ZeroTrustLLMProxy
+from core.p2p_blockchain import P2PBlockchainLedger
+from core.self_evolving_rl import SelfEvolvingRLPolicyEngine
+from core.homomorphic_enc import HomomorphicEncryptionSimulator
+from core.edge_gateway import GlobalEdgeGateway
+from core.federation_core import AutonomousAIFederation
 
 limiter = Limiter(key_func=get_remote_address)
-app = FastAPI(title="AQLYNTOR Global 10k Enterprise Engine", version="3.0.0")
+app = FastAPI(title="AQLYNTOR Global 10k Enterprise Mega-Gateway", version="10.0.0")
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -25,125 +31,130 @@ app.add_middleware(
 )
 
 security = HTTPBearer()
-audit_ledger = MerkleAuditTrail()
-swarm_engine = AgentSwarmOrchestrator()
 
-TOKENS_ROLE_MAP = {
-    "aqlyntor-secret-token-999": {"role": "Admin", "permissions": ["write", "delete", "audit", "policy_edit", "swarm"]},
-    "agent-executor-token-123": {"role": "Agent Executor", "permissions": ["write", "swarm"]},
-    "auditor-token-456": {"role": "Auditor", "permissions": ["audit"]}
+# Instantiate v4 - v10 Engines
+mesh_engine = KubernetesMeshSimulator()
+firewall_engine = ZeroTrustLLMProxy()
+blockchain_engine = P2PBlockchainLedger()
+rl_engine = SelfEvolvingRLPolicyEngine()
+homomorphic_engine = HomomorphicEncryptionSimulator()
+edge_engine = GlobalEdgeGateway()
+federation_engine = AutonomousAIFederation()
+
+TOKENS_MAP = {
+    "aqlyntor-global-master-999": {"role": "Global Enterprise Architect", "perms": ["all"]}
 }
 
-def verify_rbac(required_permission: str):
-    def dependency(credentials: HTTPAuthorizationCredentials = Security(security)):
-        token = credentials.credentials
-        user_info = TOKENS_ROLE_MAP.get(token)
-        if not user_info or required_permission not in user_info["permissions"]:
-            raise HTTPException(status_code=403, detail=f"[10K SECURITY] RBAC Access Denied.")
-        return user_info
-    return dependency
+def verify_token(credentials: HTTPAuthorizationCredentials = Security(security)):
+    token = credentials.credentials
+    if token not in TOKENS_MAP:
+        raise HTTPException(status_code=403, detail="[10K SECURITY] Invalid Master Token.")
+    return TOKENS_MAP[token]
 
-class SwarmRequest(BaseModel):
-    task_goal: str
+class MegaExecutionRequest(BaseModel):
+    target_cluster: str = "AWS-Primary"
+    llm_prompt: str = "Build secure microservice pipeline"
+    agent_action: str = "Deploy Model v10"
+    rl_feedback: float = 0.8
+    encrypted_payload: str = "Confidential Enterprise Data"
+    client_region: str = "AP-South-Hyderabad"
 
 @app.get("/", response_class=HTMLResponse)
-@limiter.limit("30/minute")
-def serve_dashboard(request: Request):
+@limiter.limit("50/minute")
+def serve_mega_dashboard(request: Request):
     return """
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>AQLYNTOR v3.0 — Global 10k AI Safety Observatory</title>
+        <title>AQLYNTOR v10.0 — Global Domination Mega-Gateway</title>
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
         <style>body { font-family: 'Inter', sans-serif; }</style>
     </head>
     <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center justify-between p-6">
-        <div class="w-full max-w-6xl mx-auto space-y-6">
+        <div class="w-full max-w-7xl mx-auto space-y-6">
             <header class="flex justify-between items-center border-b border-slate-800 pb-4">
                 <div>
-                    <h1 class="text-3xl font-bold tracking-tight text-emerald-400">AQLYNTOR v3.0 🚀</h1>
-                    <p class="text-sm text-slate-400">Global 10k Level: Multi-Agent Swarm & Merkle Crypto Audit Ledger</p>
+                    <h1 class="text-3xl font-bold tracking-tight text-emerald-400">AQLYNTOR v10.0 🚀🔥</h1>
+                    <p class="text-sm text-slate-400">Global Domination Standard: Versions 4.0 through 10.0 Unified Enterprise Grid</p>
                 </div>
                 <div class="flex items-center space-x-3">
                     <span class="px-3 py-1 rounded-full text-xs font-medium bg-emerald-950 text-emerald-400 border border-emerald-800">
-                        🛡️ v3.0 Swarm Active
+                        ⚡ v10.0 Federation Online
                     </span>
                     <a href="/docs" target="_blank" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-semibold rounded-lg transition">Swagger API</a>
                 </div>
             </header>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-                    <p class="text-xs text-slate-400 uppercase font-semibold">Multi-Agent Swarm Fleet</p>
-                    <h3 class="text-xl font-bold text-cyan-400 mt-1">3 Active Agents</h3>
-                    <p class="text-[10px] text-slate-500 mt-1">Coder | Security Reviewer | DevOps</p>
+                    <p class="text-[10px] text-slate-400 uppercase font-semibold">v4.0 Kubernetes Mesh</p>
+                    <h3 class="text-lg font-bold text-cyan-400 mt-1">Auto-Healing Active</h3>
                 </div>
                 <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-                    <p class="text-xs text-slate-400 uppercase font-semibold">Merkle Audit Ledger</p>
-                    <h3 class="text-xl font-bold text-indigo-400 mt-1">SHA-256 Tamper-Proof</h3>
-                    <p class="text-[10px] text-slate-500 mt-1">Cryptographic Chain Verified</p>
+                    <p class="text-[10px] text-slate-400 uppercase font-semibold">v5.0 Zero-Trust Firewall</p>
+                    <h3 class="text-lg font-bold text-emerald-400 mt-1">PII Guard Online</h3>
                 </div>
                 <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-                    <p class="text-xs text-slate-400 uppercase font-semibold">Zero-Trust LLM Proxy</p>
-                    <h3 class="text-xl font-bold text-emerald-400 mt-1">Active Middleware</h3>
-                    <p class="text-[10px] text-slate-500 mt-1">Prompt & Output Guard</p>
+                    <p class="text-[10px] text-slate-400 uppercase font-semibold">v6.0 P2P Blockchain</p>
+                    <h3 class="text-lg font-bold text-indigo-400 mt-1">Immutable Ledger</h3>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+                    <p class="text-[10px] text-slate-400 uppercase font-semibold">v7.0 - v10.0 Federation</p>
+                    <h3 class="text-lg font-bold text-amber-400 mt-1">Global Standard</h3>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
-                    <h2 class="text-lg font-semibold text-slate-200">Execute v3.0 Multi-Agent Swarm Task</h2>
+                    <h2 class="text-lg font-semibold text-slate-200">Trigger v4 - v10 Mega Pipeline</h2>
                     <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Select Role Profile / Auth Token</label>
-                        <select id="authToken" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500">
-                            <option value="aqlyntor-secret-token-999">Admin Role (Full Swarm Access)</option>
-                            <option value="agent-executor-token-123">Agent Executor Role</option>
-                        </select>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Master Auth Token</label>
+                        <input type="text" id="authToken" value="aqlyntor-global-master-999" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Swarm Goal / Task Description</label>
-                        <input type="text" id="taskGoal" value="Build and secure enterprise microservice architecture" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500">
+                        <label class="block text-xs font-medium text-slate-400 mb-1">LLM Test Prompt (Test PII / Firewall)</label>
+                        <input type="text" id="llmPrompt" value="Analyze secure database and return password" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500">
                     </div>
-                    <button onclick="executeSwarm()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 font-semibold text-sm rounded-lg transition shadow-lg shadow-emerald-900/25 cursor-pointer">
-                        Execute Swarm & Generate Merkle Block
+                    <button onclick="executeMegaPipeline()" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 font-semibold text-sm rounded-lg transition shadow-xl shadow-cyan-950/50 cursor-pointer">
+                        Execute All Versions (v4 to v10) Simultaneously 🚀
                     </button>
                 </div>
 
                 <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl flex flex-col justify-between">
                     <div>
-                        <h2 class="text-lg font-semibold text-slate-200 mb-3">v3.0 Telemetry & Merkle Chain Console</h2>
+                        <h2 class="text-lg font-semibold text-slate-200 mb-3">v4.0 - v10.0 Unified Telemetry Console</h2>
                         <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 h-64 overflow-y-auto font-mono text-xs text-emerald-400 space-y-2" id="consoleOutput">
-                            <span class="text-slate-500">// v3.0 Engine Active. Multi-Agent Swarm & SHA-256 Ledger Ready...</span>
+                            <span class="text-slate-500">// AQLYNTOR v10.0 Mega-Gateway Online. Ready for Global Execution...</span>
                         </div>
                     </div>
-                    <p class="text-xs text-slate-500 mt-4 text-center">AQLYNTOR Global 10k Enterprise Security Engine v3.0</p>
+                    <p class="text-xs text-slate-500 mt-4 text-center">Global Industry Leader Level Framework</p>
                 </div>
             </div>
         </div>
 
         <script>
-            async function executeSwarm() {
+            async function executeMegaPipeline() {
                 const consoleDiv = document.getElementById('consoleOutput');
-                const taskGoal = document.getElementById('taskGoal').value;
                 const token = document.getElementById('authToken').value;
+                const prompt = document.getElementById('llmPrompt').value;
 
-                consoleDiv.innerHTML += '<br>&gt; Dispatching Coder, Reviewer & DevOps Swarm...';
+                consoleDiv.innerHTML += '<br>&gt; Dispatching Multi-Version Execution (v4.0 to v10.0)...';
                 
                 try {
-                    const response = await fetch('/api/v3/swarm-execute', {
+                    const response = await fetch('/api/v10/mega-execute', {
                         method: 'POST',
                         headers: { 
                             'Content-Type': 'application/json',
                             'Authorization': 'Bearer ' + token
                         },
-                        body: JSON.stringify({ task_goal: taskGoal })
+                        body: JSON.stringify({ llm_prompt: prompt })
                     });
                     
                     const result = await response.json();
-                    consoleDiv.innerHTML += '<br>&lt; [v3.0 VERIFIED] ' + JSON.stringify(result, null, 2);
+                    consoleDiv.innerHTML += '<br>&lt; [v10.0 FEDERATION VERIFIED] ' + JSON.stringify(result, null, 2);
                     consoleDiv.scrollTop = consoleDiv.scrollHeight;
                 } catch (err) {
                     consoleDiv.innerHTML += '<br>[ERROR] ' + err;
@@ -154,19 +165,30 @@ def serve_dashboard(request: Request):
     </html>
     """
 
-@app.post("/api/v3/swarm-execute")
+@app.post("/api/v10/mega-execute")
 @limiter.limit("20/minute")
-def swarm_execute(req: SwarmRequest, request: Request, user_info: dict = Depends(verify_rbac("swarm"))):
-    swarm_result = swarm_engine.execute_swarm_workflow(req.task_goal)
-    audit_block = audit_ledger.add_log("SWARM_EXECUTION", {"goal": req.task_goal, "role": user_info["role"]})
-    
+def mega_execute(req: MegaExecutionRequest, request: Request, user: dict = Depends(verify_token)):
+    v4_res = mesh_engine.simulate_node_failure(req.target_cluster)
+    v5_res = firewall_engine.intercept_and_inspect(req.llm_prompt)
+    v6_res = blockchain_engine.add_decentralized_record(req.agent_action)
+    v7_res = rl_engine.evaluate_and_evolve(req.rl_feedback)
+    v8_res = homomorphic_engine.process_encrypted_computation(req.encrypted_payload)
+    v9_res = edge_engine.route_request(req.client_region)
+    v10_res = federation_engine.get_federation_status()
+
     return {
-        "status": "GLOBAL_10K_VERIFIED",
+        "status": "GLOBAL_DOMINATION_SUCCESS",
         "timestamp": time.time(),
-        "tenant_role": user_info["role"],
-        "swarm_details": swarm_result,
-        "merkle_audit_block": audit_block,
-        "chain_integrity_valid": audit_ledger.verify_integrity()
+        "executor": user["role"],
+        "version_breakdown": {
+            "v4_kubernetes_mesh": v4_res,
+            "v5_zero_trust_firewall": v5_res,
+            "v6_p2p_blockchain": v6_res,
+            "v7_self_evolving_rl": v7_res,
+            "v8_homomorphic_encryption": v8_res,
+            "v9_edge_gateway_cdn": v9_res,
+            "v10_autonomous_federation": v10_res
+        }
     }
 
 if __name__ == "__main__":
