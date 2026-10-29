@@ -37,3 +37,8 @@ __pycache__/
 .pytest_cache/
 outputs/
 .lovable/
+venv/
+__pycache__/
+.pytest_cache/
+outputs/
+.lovable/
