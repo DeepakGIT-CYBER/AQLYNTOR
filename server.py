@@ -61,7 +61,7 @@ def serve_dashboard(request: Request):
         <div class="w-full max-w-5xl mx-auto space-y-6">
             <header class="flex justify-between items-center border-b border-slate-800 pb-4">
                 <div>
-                    <h1 class="text-3xl font-bold tracking-tight text-emerald-400">AQLYNTOR 🚀</h1>
+                    <h1 class="text-3xl font-bold tracking-tight text-emerald-400">AQLYNTOR 🛡️</h1>
                     <p class="text-sm text-slate-400">Trustworthy AI Execution & Task Safety Observatory</p>
                 </div>
                 <div class="flex items-center space-x-3">
