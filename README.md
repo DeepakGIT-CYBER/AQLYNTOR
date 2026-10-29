@@ -1,38 +1,35 @@
-# Task Safety Observatory
+# AQLYNTOR — Trustworthy AI Execution & Task Safety Observatory
 
-Build a sleek, modern, dark-themed dashboard for an AI execution platform named "AQLYNTOR — Trustworthy AI Execution".
+> Enterprise-grade Autonomous AI Agent Governance, Policy Enforcement, and Secure Execution Framework.
 
-Include 4 main sections:
+---
 
-1. Top Stats Bar: Verified Success Rate (88%), Active Tasks (2), Bounded Recoveries (4), Policy Violations Blocked (0).
+## 🛡️ Security Architecture & Features
 
-2. Live Task Execution Pipeline: Interactive step-by-step flowchart displaying: User Goal -> Planner -> Policy Gate -> Tool Adapter -> Outcome Verifier -> Bounded Recovery -> Audit Log.
+AQLYNTOR is built to bridge the gap between autonomous AI task execution and strict enterprise security. It features a robust defense-in-stack architecture:
 
-3. Execution Log Table: Columns for Task ID, Goal Description, Timestamp, Status Badges (VERIFIED, RECOVERING, STOPPED), and Evidence Output. Include mock evidence for a file inspection task (e.g., summary.md verified).
+1. **Bearer Token Authentication (`HTTPBearer`)**: 
+   - Protects all sensitive execution endpoints from unauthorized access.
+   - Rejects unauthenticated API calls with a strict `403 Forbidden` security alert response.
 
-4. Safety & Policy Rules Panel: Toggles for "Least Privilege Sandbox", "Strict Postcondition Check", and "Human Approval for Destructive Actions".
+2. **Rate Limiting & DDoS Protection (`SlowAPI`)**: 
+   - Implements IP-based request throttling to mitigate brute-force and DDoS attacks on critical task execution endpoints.
 
-Make the UI look clean, fast, and high-tech using Tailwind CSS, glassmorphism cards, and green/amber/cyan indicator tags.
+3. **Autonomous Policy Gate & Verifier**:
+   - Intercepts unsafe operations (e.g., unauthorized file deletions or destructive system calls) and triggers bounded recoveries.
 
-This project was built with [Lovable](https://lovable.dev).
+4. **Modern High-Tech Dashboard**:
+   - Dark-themed glassmorphism UI styled with Tailwind CSS.
+   - Real-time telemetry console and live firewall status indicators (`🛡️ Firewall & Auth Active`).
 
-**Live app**: https://task-safety-observatory.lovable.app
+---
 
-## Build with Lovable
+## 🚀 Quick Start & Local Setup
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/3d25efca-859e-4a91-9580-4272c6b35073).
+### Prerequisites
+Make sure you have Python (v3.10+) installed.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/DeepakGIT-CYBER/AQLYNTOR.git](https://github.com/DeepakGIT-CYBER/AQLYNTOR.git)
+cd AQLYNTOR
