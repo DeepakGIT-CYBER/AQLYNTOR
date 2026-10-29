@@ -1,35 +1,44 @@
-# AQLYNTOR — Trustworthy AI Execution & Task Safety Observatory
+# AQLYNTOR — Multi-Tenant Autonomous AI Agent Governance & Security Framework
 
-> Enterprise-grade Autonomous AI Agent Governance, Policy Enforcement, and Secure Execution Framework.
+> Enterprise-grade Autonomous AI Agent Governance, Policy Enforcement, RAG Vector DB Policy Engine, and Kubernetes Deployment Framework.
 
 ---
 
-## 🛡️ Security Architecture & Features
+## 🛡️ Enterprise Security Architecture & Core Features
 
-AQLYNTOR is built to bridge the gap between autonomous AI task execution and strict enterprise security. It features a robust defense-in-stack architecture:
+AQLYNTOR bridges the gap between autonomous AI task execution and strict enterprise compliance. It features an advanced defense-in-stack architecture:
 
-1. **Bearer Token Authentication (`HTTPBearer`)**: 
-   - Protects all sensitive execution endpoints from unauthorized access.
-   - Rejects unauthenticated API calls with a strict `403 Forbidden` security alert response.
+1. **Multi-Tenant RBAC Security Matrix**:
+   - Role-Based Access Control enforcing distinct permissions across **Admin**, **Agent Executor**, and **Auditor** roles.
+   - Dynamic token-to-role validation rejecting unauthorized operations.
 
-2. **Rate Limiting & DDoS Protection (`SlowAPI`)**: 
-   - Implements IP-based request throttling to mitigate brute-force and DDoS attacks on critical task execution endpoints.
+2. **RAG Vector Database Policy Engine (`ChromaDB`)**:
+   - Real-time semantic policy matching and compliance verification using embedded vector rules.
 
-3. **Autonomous Policy Gate & Verifier**:
+3. **Bearer Token Authentication & DDoS Protection (`SlowAPI`)**:
+   - Secures sensitive execution endpoints and implements IP-based rate throttling against brute-force attacks.
+
+4. **Autonomous Policy Gate & Verifier**:
    - Intercepts unsafe operations (e.g., unauthorized file deletions or destructive system calls) and triggers bounded recoveries.
 
-4. **Modern High-Tech Dashboard**:
-   - Dark-themed glassmorphism UI styled with Tailwind CSS.
-   - Real-time telemetry console and live firewall status indicators (`🛡️ Firewall & Auth Active`).
+5. **Glassmorphism Telemetry Dashboard**:
+   - High-tech dark-themed UI styled with Tailwind CSS, featuring live telemetry consoles and firewall status monitors.
 
 ---
 
-## 🚀 Quick Start & Local Setup
+## 📂 Project Directory Structure
 
-### Prerequisites
-Make sure you have Python (v3.10+) installed.
-
-### 1. Clone the Repository
-```bash
-git clone [https://github.com/DeepakGIT-CYBER/AQLYNTOR.git](https://github.com/DeepakGIT-CYBER/AQLYNTOR.git)
-cd AQLYNTOR
+```text
+aqlyntor/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml          # GitHub Actions Automated CI/CD Pipeline
+├── core/
+│   ├── rbac.py                 # Multi-Tenant RBAC Matrix
+│   └── rag_policy.py           # ChromaDB RAG Policy Engine
+├── k8s/
+│   ├── deployment.yaml         # Kubernetes Pod Scaling & Services
+│   └── network-policy.yaml     # Hardened K8s Network Security
+├── server.py                   # FastAPI Multi-Tenant Enterprise Gateway & UI
+├── Dockerfile                  # Multi-stage Hardened Container Image
+└── requirements.txt            # Project Dependencies
