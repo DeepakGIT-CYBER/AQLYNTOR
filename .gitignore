@@ -32,3 +32,8 @@ dist-ssr
 *.sw?
 venv/
 __pycache__/
+venv/
+__pycache__/
+.pytest_cache/
+outputs/
+.lovable/

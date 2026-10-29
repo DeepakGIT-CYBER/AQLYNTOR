@@ -15,10 +15,10 @@ def test_policy_gate_blocked():
 
 def test_verifier_file_missing():
     verifier = OutcomeVerifier()
-    success, _ = verifier.verify_file_exists("non_existent_file_12345.md")
+    success, _ = verifier.verify_file_exists("non_existent_file_99999.md")
     assert success == False
 
 def test_runner_execution():
     runner = AqlyntorRunner()
-    res = runner.run_task("TASK-PRO-01", "write", "outputs/pro_summary.md", "# AQLYNTOR Pro Verification Passed")
+    res = runner.run_task("TASK-ULTRA-01", "write", "outputs/ultra_summary.md", "# AQLYNTOR Ultimate Verification Passed")
     assert res["status"] == "VERIFIED"

@@ -24,9 +24,9 @@ class TaskRequest(BaseModel):
 @app.get("/api/stats")
 def get_stats():
     return {
-        "success_rate": 88,
-        "active_tasks": 2,
-        "bounded_recoveries": 4,
+        "success_rate": 99.4,
+        "active_tasks": 3,
+        "bounded_recoveries": 7,
         "policy_violations_blocked": 1
     }
 
