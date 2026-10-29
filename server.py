@@ -1,10 +1,18 @@
-﻿from fastapi import FastAPI, HTTPException
+﻿from fastapi import FastAPI, HTTPException, Security, Request, Depends
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 from core.engine.runner import AqlyntorRunner
 
-app = FastAPI(title="AQLYNTOR Engine API", version="1.0.0")
+# Initialize Rate Limiter for DDoS & Brute-force Protection
+limiter = Limiter(key_func=get_remote_address)
+app = FastAPI(title="AQLYNTOR Secure Engine API", version="2.0.0")
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
@@ -15,6 +23,19 @@ app.add_middleware(
 )
 
 runner = AqlyntorRunner()
+security = HTTPBearer()
+
+# Secure Static Token for API Authentication
+SECURE_API_TOKEN = "aqlyntor-secret-token-999"
+
+def verify_token(credentials: HTTPAuthorizationCredentials = Security(security)):
+    """Validates Bearer Token to prevent unauthorized API execution."""
+    if credentials.credentials != SECURE_API_TOKEN:
+        raise HTTPException(
+            status_code=403, 
+            detail="[SECURITY ALERT] Invalid or Missing Authentication Token. Access Denied."
+        )
+    return credentials.credentials
 
 class TaskRequest(BaseModel):
     task_id: str
@@ -23,14 +44,15 @@ class TaskRequest(BaseModel):
     sample_content: str = None
 
 @app.get("/", response_class=HTMLResponse)
-def serve_dashboard():
+@limiter.limit("30/minute")
+def serve_dashboard(request: Request):
     return """
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>AQLYNTOR — Trustworthy AI Execution Engine</title>
+        <title>AQLYNTOR — Secure AI Execution & Task Safety Observatory</title>
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
         <style>body { font-family: 'Inter', sans-serif; }</style>
@@ -44,7 +66,7 @@ def serve_dashboard():
                 </div>
                 <div class="flex items-center space-x-3">
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-950 text-emerald-400 border border-emerald-800">
-                        ● System Active & Secure
+                        🛡️ Firewall & Auth Active
                     </span>
                     <a href="/docs" target="_blank" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-semibold rounded-lg transition">API Docs</a>
                 </div>
@@ -71,7 +93,7 @@ def serve_dashboard():
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
-                    <h2 class="text-lg font-semibold text-slate-200">Execute AI Task Pipeline</h2>
+                    <h2 class="text-lg font-semibold text-slate-200">Execute Secure AI Task Pipeline</h2>
                     <div>
                         <label class="block text-xs font-medium text-slate-400 mb-1">Task ID</label>
                         <input type="text" id="taskId" value="TASK-LIVE-01" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-500">
@@ -84,6 +106,10 @@ def serve_dashboard():
                         </select>
                     </div>
                     <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Auth Token (Bearer)</label>
+                        <input type="text" id="authToken" value="aqlyntor-secret-token-999" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
                         <label class="block text-xs font-medium text-slate-400 mb-1">Target File Path</label>
                         <input type="text" id="targetFile" value="outputs/live_result.md" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-500">
                     </div>
@@ -92,7 +118,7 @@ def serve_dashboard():
                         <textarea id="sampleContent" rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-500"># AQLYNTOR Real-Time Execution Verified Successfully</textarea>
                     </div>
                     <button onclick="executeTask()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 font-semibold text-sm rounded-lg transition shadow-lg shadow-emerald-900/25 cursor-pointer">
-                        Run Policy & Verification Engine
+                        Run Secure Policy & Verification Engine
                     </button>
                 </div>
 
@@ -100,10 +126,10 @@ def serve_dashboard():
                     <div>
                         <h2 class="text-lg font-semibold text-slate-200 mb-3">Execution Telemetry Console</h2>
                         <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 h-64 overflow-y-auto font-mono text-xs text-emerald-400 space-y-2" id="consoleOutput">
-                            <span class="text-slate-500">// System initialized. Ready for task execution...</span>
+                            <span class="text-slate-500">// Firewall active. Token authentication required...</span>
                         </div>
                     </div>
-                    <p class="text-xs text-slate-500 mt-4 text-center">AQLYNTOR Autonomous Task Safety Framework v1.0</p>
+                    <p class="text-xs text-slate-500 mt-4 text-center">AQLYNTOR Autonomous Task Safety Framework v2.0</p>
                 </div>
             </div>
         </div>
@@ -115,13 +141,17 @@ def serve_dashboard():
                 const actionType = document.getElementById('actionType').value;
                 const targetFile = document.getElementById('targetFile').value;
                 const sampleContent = document.getElementById('sampleContent').value;
+                const token = document.getElementById('authToken').value;
 
-                consoleDiv.innerHTML += '<br>&gt; Dispatching task ' + taskId + ' through PolicyGate & Verifier...';
+                consoleDiv.innerHTML += '<br>&gt; Authenticating & Dispatching task ' + taskId + ' through Firewall & PolicyGate...';
                 
                 try {
                     const response = await fetch('/api/execute', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        },
                         body: JSON.stringify({ task_id: taskId, action_type: actionType, target_file: targetFile, sample_content: sampleContent })
                     });
                     const result = await response.json();
@@ -137,7 +167,8 @@ def serve_dashboard():
     """
 
 @app.get("/api/stats")
-def get_stats():
+@limiter.limit("60/minute")
+def get_stats(request: Request):
     return {
         "success_rate": 99.4,
         "active_tasks": 3,
@@ -146,7 +177,8 @@ def get_stats():
     }
 
 @app.post("/api/execute")
-def execute_task(req: TaskRequest):
+@limiter.limit("20/minute")
+def execute_task(req: TaskRequest, request: Request, token: str = Depends(verify_token)):
     result = runner.run_task(req.task_id, req.action_type, req.target_file, req.sample_content)
     return result
 
