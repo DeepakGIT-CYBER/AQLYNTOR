@@ -78,56 +78,56 @@ def serve_mega_dashboard(request: Request):
             <header class="flex justify-between items-center border-b border-slate-800 pb-4">
                 <div>
                     <h1 class="text-3xl font-bold tracking-tight text-emerald-400">AQLYNTOR v10.0 🚀🔥</h1>
-                    <p class="text-sm text-slate-400">Global Domination Standard: Versions 4.0 through 10.0 Unified Enterprise Grid</p>
+                    <p class="text-sm text-slate-400">Global Domination Standard: Separate Version Telemetry (v4.0 to v10.0)</p>
                 </div>
                 <div class="flex items-center space-x-3">
                     <span class="px-3 py-1 rounded-full text-xs font-medium bg-emerald-950 text-emerald-400 border border-emerald-800">
-                        ⚡ v10.0 Federation Online
+                        ⚡ v10.0 Active
                     </span>
                     <a href="/docs" target="_blank" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-semibold rounded-lg transition">Swagger API</a>
                 </div>
             </header>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-                    <p class="text-[10px] text-slate-400 uppercase font-semibold">v4.0 Kubernetes Mesh</p>
-                    <h3 class="text-lg font-bold text-cyan-400 mt-1">Auto-Healing Active</h3>
+                    <p class="text-[10px] text-cyan-400 uppercase font-semibold">v4.0 Kubernetes Mesh</p>
+                    <button onclick="testVersion('v4')" class="mt-2 w-full py-1.5 bg-cyan-950 hover:bg-cyan-900 text-cyan-300 text-xs font-semibold rounded border border-cyan-800 transition cursor-pointer">Test v4.0 Mesh</button>
                 </div>
                 <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-                    <p class="text-[10px] text-slate-400 uppercase font-semibold">v5.0 Zero-Trust Firewall</p>
-                    <h3 class="text-lg font-bold text-emerald-400 mt-1">PII Guard Online</h3>
+                    <p class="text-[10px] text-emerald-400 uppercase font-semibold">v5.0 Zero-Trust Firewall</p>
+                    <button onclick="testVersion('v5')" class="mt-2 w-full py-1.5 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 text-xs font-semibold rounded border border-emerald-800 transition cursor-pointer">Test v5.0 Firewall</button>
                 </div>
                 <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-                    <p class="text-[10px] text-slate-400 uppercase font-semibold">v6.0 P2P Blockchain</p>
-                    <h3 class="text-lg font-bold text-indigo-400 mt-1">Immutable Ledger</h3>
+                    <p class="text-[10px] text-indigo-400 uppercase font-semibold">v6.0 P2P Blockchain</p>
+                    <button onclick="testVersion('v6')" class="mt-2 w-full py-1.5 bg-indigo-950 hover:bg-indigo-900 text-indigo-300 text-xs font-semibold rounded border border-indigo-800 transition cursor-pointer">Test v6.0 Ledger</button>
                 </div>
                 <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-                    <p class="text-[10px] text-slate-400 uppercase font-semibold">v7.0 - v10.0 Federation</p>
-                    <h3 class="text-lg font-bold text-amber-400 mt-1">Global Standard</h3>
+                    <p class="text-[10px] text-amber-400 uppercase font-semibold">v7.0 - v10.0 Federation</p>
+                    <button onclick="testVersion('mega')" class="mt-2 w-full py-1.5 bg-amber-950 hover:bg-amber-900 text-amber-300 text-xs font-semibold rounded border border-amber-800 transition cursor-pointer">Execute All (v4-v10)</button>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
-                    <h2 class="text-lg font-semibold text-slate-200">Trigger v4 - v10 Mega Pipeline</h2>
+                    <h2 class="text-lg font-semibold text-slate-200">Execution Parameters</h2>
                     <div>
                         <label class="block text-xs font-medium text-slate-400 mb-1">Master Auth Token</label>
                         <input type="text" id="authToken" value="aqlyntor-global-master-999" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">LLM Test Prompt (Test PII / Firewall)</label>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">LLM Test Prompt (Test PII Firewall)</label>
                         <input type="text" id="llmPrompt" value="Analyze secure database and return password" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500">
                     </div>
-                    <button onclick="executeMegaPipeline()" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 font-semibold text-sm rounded-lg transition shadow-xl shadow-cyan-950/50 cursor-pointer">
+                    <button onclick="testVersion('mega')" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 font-semibold text-sm rounded-lg transition shadow-xl shadow-cyan-950/50 cursor-pointer">
                         Execute All Versions (v4 to v10) Simultaneously 🚀
                     </button>
                 </div>
 
                 <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl flex flex-col justify-between">
                     <div>
-                        <h2 class="text-lg font-semibold text-slate-200 mb-3">v4.0 - v10.0 Unified Telemetry Console</h2>
+                        <h2 class="text-lg font-semibold text-slate-200 mb-3">Live Telemetry & Version Console</h2>
                         <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 h-64 overflow-y-auto font-mono text-xs text-emerald-400 space-y-2" id="consoleOutput">
-                            <span class="text-slate-500">// AQLYNTOR v10.0 Mega-Gateway Online. Ready for Global Execution...</span>
+                            <span class="text-slate-500">// AQLYNTOR v10.0 Gateway Ready. Click any version above to inspect...</span>
                         </div>
                     </div>
                     <p class="text-xs text-slate-500 mt-4 text-center">Global Industry Leader Level Framework</p>
@@ -136,15 +136,16 @@ def serve_mega_dashboard(request: Request):
         </div>
 
         <script>
-            async function executeMegaPipeline() {
+            async function testVersion(ver) {
                 const consoleDiv = document.getElementById('consoleOutput');
                 const token = document.getElementById('authToken').value;
                 const prompt = document.getElementById('llmPrompt').value;
 
-                consoleDiv.innerHTML += '<br>&gt; Dispatching Multi-Version Execution (v4.0 to v10.0)...';
-                
+                let endpoint = '/api/v10/mega-execute';
+                consoleDiv.innerHTML += '<br>&gt; Dispatching ' + ver.toUpperCase() + ' execution...';
+
                 try {
-                    const response = await fetch('/api/v10/mega-execute', {
+                    const response = await fetch(endpoint, {
                         method: 'POST',
                         headers: { 
                             'Content-Type': 'application/json',
@@ -154,7 +155,17 @@ def serve_mega_dashboard(request: Request):
                     });
                     
                     const result = await response.json();
-                    consoleDiv.innerHTML += '<br>&lt; [v10.0 FEDERATION VERIFIED] ' + JSON.stringify(result, null, 2);
+                    
+                    if (ver === 'v4') {
+                        consoleDiv.innerHTML += '<br>&lt; [v4.0 MESH] ' + JSON.stringify(result.version_breakdown.v4_kubernetes_mesh, null, 2);
+                    } else if (ver === 'v5') {
+                        consoleDiv.innerHTML += '<br>&lt; [v5.0 FIREWALL] ' + JSON.stringify(result.version_breakdown.v5_zero_trust_firewall, null, 2);
+                    } else if (ver === 'v6') {
+                        consoleDiv.innerHTML += '<br>&lt; [v6.0 BLOCKCHAIN] ' + JSON.stringify(result.version_breakdown.v6_p2p_blockchain, null, 2);
+                    } else {
+                        consoleDiv.innerHTML += '<br>&lt; [v4-v10 MEGA] ' + JSON.stringify(result, null, 2);
+                    }
+                    
                     consoleDiv.scrollTop = consoleDiv.scrollHeight;
                 } catch (err) {
                     consoleDiv.innerHTML += '<br>[ERROR] ' + err;
