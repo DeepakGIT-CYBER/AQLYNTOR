@@ -51,3 +51,7 @@
 ### 🔹 v11.0: Production-Grade Enterprise AI Security Gateway & Telemetry Mesh (`server.py` & `prometheus.yml`)
 - **Flow**: `Incoming AI Prompt ➡️ Dynamic Regex Threat Inspection Engine ➡️ [403 Forbidden Block] OR [200 Secure LLM Pass-Through] + Prometheus Metrics Scrape`
 - **Description**: Real-time enterprise security mesh providing dynamic firewall inspection against jailbreaks and instruction overrides, coupled with native Prometheus scraping endpoints and an interactive real-time grid control dashboard.
+
+### 🔹 v12.0: Ultimate Enterprise Autonomic Defense Mesh & Red-Teaming Sandbox (`core/v12_defense_mesh.py` & `server.py`)
+- **Flow**: `Incoming AI Prompt ➡️ Dynamic Red-Team Exploit Battery / RAG PII Shield ➡️ [403 Intercept] OR [200 Autonomic Pass-Through]`
+- **Description**: Enterprise-grade autonomic defense platform featuring an automated multi-vector jailbreak simulation sandbox, real-time RAG PII masking, and multi-region Kubernetes edge mesh telemetry.
