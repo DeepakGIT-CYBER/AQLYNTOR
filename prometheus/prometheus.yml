@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'aqlyntor-v11-gateway'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['aqlyntor-gateway:8000']
