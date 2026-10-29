@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aqlyntor-deployment
+  labels:
+    app: aqlyntor
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aqlyntor
+  template:
+    metadata:
+      labels:
+        app: aqlyntor
+    spec:
+      containers:
+      - name: aqlyntor-core
+        image: deepakgitcyber/aqlyntor:latest
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: AQLYNTOR_SECRET_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: aqlyntor-secrets
+              key: secret-token
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aqlyntor-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: aqlyntor
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
