@@ -77,6 +77,18 @@ As the world transitions into an era governed entirely by Autonomous AI Agents, 
 
 
 
+
+---
+
+## 🔹 v14.0: Omniversal Zero-Point Singularity Core (singularity_core.py & main.py)
+- **Flow**: Intent Payload ➡️ Non-Binary Quantum Morphing Engine ➡️ Zero-Point Intent Synthesis ➡️ Self-Proliferating Neural Genesis
+- **Description**: Next-generation core transcending standard computing paradigms. Features FastAPI router integration at /v14 with standalone Singularity Core architecture.
+
+👑 **Sole Architect & Inventor**: Deepak Reddy (M.Tech CSE)  
+🔒 Exclusive Intellectual Property Protected Worldwide
+
+---
+
 ## ⚙️ Quick Start & Local Deployment
 
 1. **Clone the Repository:**
@@ -84,10 +96,3 @@ As the world transitions into an era governed entirely by Autonomous AI Agents, 
    git clone [https://github.com/your-username/AQLYNTOR.git](https://github.com/your-username/AQLYNTOR.git)
    cd AQLYNTOR
 
-   🔹 v14.0: Omniversal Zero-Point Singularity Core (singularity_core.py & main.py)
-- Flow: Intent Payload ➡️ Non-Binary Quantum Morphing Engine ➡️ Zero-Point Intent Synthesis ➡️ Self-Proliferating Neural Genesis
-- Description: Next-generation core transcending standard computing paradigms. Features FastAPI router integration at `/v14` with standalone Singularity Core architecture.
-
-👑 Sole Architect & Inventor: Deepak Reddy (M.Tech CSE)
-🔒 Exclusive Intellectual Property Protected Worldwide
-"@
